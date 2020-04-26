@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "comfortaa";
+    src: url("https://fonts.gstatic.com/s/comfortaa/v28/1Ptsg8LJRfWJmhDAuUs4TYFqL_KWxQ.woff2");
+}
+html,
+body {
+    font-family: "comfortaa", Arial, Helvetica, sans-serif;
+}
+
+* {
+    color: #fff;
+    box-sizing: border-box;
+    font-family: "comfortaa", Arial, Helvetica, sans-serif !important;
+}
+
+
+@media screen and (min-width:768px){
+    #app{
+        max-width: 750px;
+        margin: 0 auto;
+    }
+}

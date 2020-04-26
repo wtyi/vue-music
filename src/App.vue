@@ -1,32 +1,50 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="layout">
+        <router-view />
+        <!-- 歌曲列表 当前播放歌曲ID -->
+        <MusicModal :state="state" />
+        <Loading :show="showLoading" />
+        <audio :src="state.audioUrl" ref="audio" preload style="display:none"></audio>
     </div>
-    <router-view/>
-  </div>
 </template>
+<script>
+import MusicModal from '@/components/musicModal/index.vue'
+import Loading from '@/components/loading/index.vue'
+import { ref, onMounted } from 'vue'
+import { setAudio, state } from '@/utils/music/index.js'
+export default {
+    components: {
+        MusicModal,
+        Loading
+    },
+    setup (props, ctx) {
+        const showLoading = ref(true)
+        const audio = ref(null)
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+        onMounted(() => {
+            window.onload = function () {
+                showLoading.value = false
+            }
+            setAudio(audio)
+        })
+        return {
+            showLoading,
+            audio,
+            state
+        }
     }
-  }
+}
+</script>
+<style lang="scss">
+@import url(./assets/scss/reset.scss);
+@import url(./assets/scss/global.scss);
+
+#layout {
+    width: 100%;
+    min-height: 100vh;
+    & > div {
+        width: 100%;
+        min-height: 100vh;
+    }
 }
 </style>

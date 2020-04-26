@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1763133_lrt44mktz4l.css">
+    <script>
+        (function (doc, win, designWidth) {
+            let timer = null;
+            let html = doc.documentElement;
+            function refreshRem() {
+                let clientWidth = html.getBoundingClientRect().width;
+                if (clientWidth > designWidth) {
+                    html.style.fontSize = '100px'
+                } else {
+                    html.style.fontSize = 100 * (clientWidth / designWidth) + 'px'
+                }
+            }
+            doc.addEventListener("DOMContentLoaded", refreshRem)
+            win && win.addEventListener("resize", function () {
+                timer && clearTimeout(timer)
+                timer = setTimeout(() => {
+                    refreshRem()
+                }, 500)
+            })
+        })(document, window, 750)
+    </script>
+</head>
+
+<body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+            Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  </body>
+</body>
+
 </html>

@@ -8,13 +8,10 @@ import Modal from '@/components/modal/index.js'
  */
 export const setAudio = function (audio) {
     audio && (state.audio = audio)
-    // if (!audio.oncanplay) {
-    //     state.audio.oncanplay = function () {
-    //         state.audio.play()
-    //         console.log(123)
-    //         setSongTimeInterval()
-    //     }
-    // }
+    state.audio.oncanplay = function () {
+        console.log(1)
+        changePlayStatus(true)
+    }
 }
 
 /**
@@ -36,20 +33,8 @@ export const changePlayStatus = function (status = null) {
     state.timer && clearInterval(state.timer)
     status == null ? (state.status = !state.status) : (state.status = status)
     if (state.status) {
-        state.audioUrl && state.audio && (function () {
-            // 切换或新听歌曲事件 每次切换前会赋值事件null
-            if (!state.audio.oncanplay) {
-                // 音频加载完成至可播放状态 开始播放并开启进度条计时
-                state.audio.oncanplay = function () {
-                    state.audio.play()
-                    setSongTimeInterval() /// /// 问题！
-                }
-            } else {
-                // 暂停再次开启
-                state.audio.play()
-                setSongTimeInterval()
-            }
-        })()
+        state.audio.play()
+        setSongTimeInterval()
     } else {
         state.audioUrl && state.audio && state.audio.pause()
     }
@@ -66,15 +51,18 @@ export const setPlaySong = async function (song) {
     // 当成功获取音乐URL后才会赋值信息
     const songResult = await getSongInfoById(song.id)
     if (typeof songResult === 'object') {
-        // 设置歌曲总长度(秒)
-        state.status && changePlayStatus(false) // 暂停播放
-        song && (state.playSong = song)// 重新赋值
+        state.playSong = song
+        changePlayStatus(false)
         state.audioUrl = songResult.url
         !state.showModal && (state.showModal = true)
-        // 删除之前的事件
-        state.audio.oncanplay = null
-        // 开始播放
-        changePlayStatus(true)
+        state.status = true
+        // ios上不能触发事件不自动播放等原因兼容。。
+        setTimeout(() => {
+            if (state.audio.paused) {
+                state.audio.pause()
+                state.audio.play()
+            }
+        }, 800)
     } else {
         // 显示错误信息
         console.error(songResult)
@@ -168,7 +156,6 @@ export const setSongTimeInterval = function () {
     const times = state.audio.duration
     state.time = state.audio.currentTime ? state.audio.currentTime / times * 100 : 0.1
     state.timer = setInterval(() => {
-        console.log('计时中...')
         const _time = state.audio.currentTime / times * 100
         if (Math.round(_time) >= 100) {
             state.time = 100
@@ -178,7 +165,6 @@ export const setSongTimeInterval = function () {
             if (state.mode === 'loop') {
                 playNextSong()
             } else if (state.mode === 'random') {
-                console.log('suiji')
                 randomPlaySong()
             }
         } else {

@@ -66,9 +66,9 @@ export default {
             if (index <= -1) {
                 return ['', str]
             }
-            const first = str.slice(index, index + matchStr.length)
-            const last = str.slice(index + 1, str.length)
-            return [first, last]
+            const arr = str.split('')
+            const first = arr.splice(index, matchStr.length)
+            return [first.join(''), arr.join('')]
         }
 
         const suggestList = computed(() => {

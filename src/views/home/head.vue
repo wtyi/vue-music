@@ -10,7 +10,7 @@
                     type="text"
                     placeholder="search value"
                     v-model="state.searchVal"
-                    @keydown.enter="triggerSearch"
+                    @click="triggerSearch"
                 />
                 <i class="iconfont icon-search"></i>
             </div>
@@ -20,14 +20,17 @@
 
 <script>
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
     setup (...props) {
-        console.log(props)
         const state = reactive({
             searchVal: ''
         })
+        const router = useRouter()
         // 搜索歌曲
-        const triggerSearch = function () {}
+        const triggerSearch = function () {
+            router.push({ name: 'search' })
+        }
         return {
             state,
             triggerSearch

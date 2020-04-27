@@ -25,7 +25,7 @@ export const setSongList = function (songList) {
     if (state.playSong && (!songList.value || songList.value.some(song => song.id === state.playSong.id))) {
         return false
     }
-    songList && (state.songList = songList.value.filter(song => song.st !== 3))// st==1的免费 =3收费 其他未知
+    songList && (state.songList = songList.value.filter(song => song.fee === 8))// 8免费 1好像会员
 }
 
 /**

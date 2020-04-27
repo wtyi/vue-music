@@ -2,7 +2,7 @@
 <!-- recent fashion 近期流行.. -->
   <div class="recent">
       <div class="title">
-          <h1>Recent fashion </h1>
+          <h1>推荐歌曲 </h1>
           <span class="more">
               <i class="iconfont icon-arrow-right"></i>
           </span>

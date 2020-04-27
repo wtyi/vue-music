@@ -33,7 +33,7 @@
 <script>
 import { computed } from 'vue'
 import useMove from './index.js'
-import * as musicMethods from '@/utils/music/index'
+import * as musicMethods from '@/utils/music/index.js'
 export default {
     props: {
         state: {
@@ -94,13 +94,12 @@ export default {
         const pauseSong = function () {
             musicMethods.changePlayStatus(false)
         }
-
         const playNextSong = function () {
-            musicMethods.playNext && musicMethods.playNext()
+            musicMethods.playNextSong && musicMethods.playNextSong()
         }
 
         const playPrevSong = function () {
-            musicMethods.playPrev && musicMethods.playPrev()
+            musicMethods.playPrevSong && musicMethods.playPrevSong()
         }
 
         const hideMusicModal = function () {

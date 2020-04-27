@@ -1,12 +1,13 @@
 <template>
     <div class="index_album">
-        <h1>New Album</h1>
+        <h1>最新专辑</h1>
         <div class="album-list">
             <ul v-hammer:swipe.down="albumMoveDown">
                 <li class="album-item" v-for="(album) in state.albums"
                     :key="album.id"
                     :style="{backgroundImage:`url(${album.blurPicUrl})`}"
                     :class="album.class"
+                    @click="viewAlbum(album.id)"
                 >
                     <div class="head">
                         <span>NEW</span>
@@ -32,18 +33,22 @@
 <script>
 import { getIndexNewAlbum } from '../../request/api'
 import { onMounted, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import albumMove from './album.js'
 export default {
-    setup () {
+    setup (props, ctx) {
         const state = reactive({
             albums: [],
             showLoadding: false
         })
-
+        const router = useRouter()
         const albumMoveDown = function (e) {
             albumMove(state, 500, function () {
 
             })
+        }
+        const viewAlbum = function (id) {
+            router.push({ name: 'album', params: { id } })
         }
 
         onMounted(() => {
@@ -54,7 +59,8 @@ export default {
 
         return {
             state,
-            albumMoveDown
+            albumMoveDown,
+            viewAlbum
         }
     }
 }

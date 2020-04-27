@@ -8,12 +8,13 @@
 </template>
 
 <script>
-import { getCurrentInstance, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Head from './head'
 import Info from './info'
 import Foot from './foot'
 import { getSingerSongs } from '@/request/api.js'
 import { setSongList, setPlaySong } from '@/utils/music/index'
+import { useRouter, useRoute } from 'vue-router'
 export default {
     components: {
         Head,
@@ -21,21 +22,19 @@ export default {
         Foot
     },
     setup (props, ctx) {
-        const vm = getCurrentInstance()
-        const context = vm.ctx
-        const $router = context.$router
+        const router = useRouter()
+        const route = useRoute()
         const songList = ref([])
         const singerInfo = ref({})
         const routerBack = function () {
-            $router.push({ name: 'Home', params: {} })
+            router.history.go(-1)
         }
         const playSong = function (song) {
             setPlaySong(song)
             setSongList(songList)
         }
         onMounted(() => {
-            const route = $router.currentRoute
-            const { id } = route.value.params
+            const { id } = route.params
             // 获取歌手全部单曲
             getSingerSongs(id).then(({ hotSongs, artist }) => {
                 songList.value = hotSongs

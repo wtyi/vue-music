@@ -2,7 +2,7 @@
 <!-- 推荐歌手... -->
   <div class="propSinger">
       <div class="title">
-          <h1>Recommend</h1>
+          <h1>热门歌手</h1>
           <span>Daily updateg</span>
       </div>
     <div class="singer-list">
@@ -37,7 +37,9 @@
 
 <script>
 import { getTopSinger } from '@/request/api.js'
-import { onMounted, reactive, getCurrentInstance } from 'vue'
+import { onMounted, reactive } from 'vue'
+import Modal from '@/components/modal/index.js'
+import { useRouter } from 'vue-router'
 export default {
     components: {
 
@@ -47,14 +49,14 @@ export default {
             singers: []
         })
         // 获取router实例
-        const router = getCurrentInstance().ctx.$router
-        console.log(router)
+        const router = useRouter()
         const singSingerSong = function (singer) {
             if (singer.id) {
                 // 跳转
                 router.push({ name: 'singer', params: { id: singer.id } })
             } else {
                 // 提示
+                Modal.show('ID不存在')
             }
         }
 

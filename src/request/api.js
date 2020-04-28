@@ -67,3 +67,12 @@ export const getSearchDefaultKeyword = () => {
 export const getSearchSuggest = (keywords) => {
     return axios.get('/search/suggest', { params: { keywords } })
 }
+
+/**
+ * 根据关键字与类型搜索 1 即单曲 , 取值意义 : 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频, 1018:综合
+ * @param {e} keywords
+ * @param {*} type
+ */
+export const getSearchResultSong = (keywords, type) => {
+    return axios.get('/search', { params: { keywords, type } })
+}

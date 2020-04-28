@@ -11,7 +11,7 @@
 import MusicModal from '@/components/musicModal/index.vue'
 import Loading from '@/components/loading/index.vue'
 import { ref, onMounted } from 'vue'
-import { setAudio, state } from '@/utils/music/index.js'
+import { setAudio, state } from '@/core/music/index.js'
 export default {
     components: {
         MusicModal,

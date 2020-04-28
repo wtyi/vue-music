@@ -1,6 +1,6 @@
 <template>
     <div class="search_suggest">
-        <p class="noResult" v-show="suggestList.code == -100">去搜索"{{props.searchKeyword}}"</p>
+        <p class="noResult" v-show="suggestList.code == -100">去搜索"{{searchState.searchKeyword}}"</p>
         <ul v-show="suggestList.code == 200">
             <div class="showIcon">
                 <div>
@@ -54,12 +54,10 @@
 
 <script>
 import { computed } from 'vue'
+import { useSearchState } from './useSearch'
 export default {
-    props: {
-        searchSuggestList: Object,
-        searchKeyword: String
-    },
     setup (props, ctx) {
+        const searchState = useSearchState()
         // 林俊杰  林
         const filterMatchKeyword = function (str, matchStr) {
             const index = str.indexOf(matchStr)
@@ -72,13 +70,13 @@ export default {
         }
 
         const suggestList = computed(() => {
-            const artists = props.searchSuggestList.artists || []
-            const albums = props.searchSuggestList.albums || []
-            const songs = props.searchSuggestList.songs || [];
+            const artists = searchState.searchSuggest.artists || []
+            const albums = searchState.searchSuggest.albums || []
+            const songs = searchState.searchSuggest.songs || [];
             [...artists, ...albums, ...songs].forEach(item => {
                 const [fisrt, last] = filterMatchKeyword(
                     item.name,
-                    props.searchKeyword
+                    searchState.searchKeyword
                 )
                 item.first = fisrt
                 item.last = last
@@ -99,8 +97,8 @@ export default {
             }
         })
         return {
-            suggestList,
-            props: props
+            searchState,
+            suggestList
         }
     }
 }

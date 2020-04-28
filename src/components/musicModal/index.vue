@@ -33,7 +33,7 @@
 <script>
 import { computed } from 'vue'
 import useMove from './index.js'
-import * as musicMethods from '@/utils/music/index.js'
+import * as musicMethods from '@/core/music/index.js'
 export default {
     props: {
         state: {

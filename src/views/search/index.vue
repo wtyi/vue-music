@@ -1,61 +1,65 @@
 <template>
     <div class="search_page">
-        <SearchHead :defaultKeyword='defaultSearchKeyword' @search="handleSearch" @changeSearchSuggest='handleSearchSuggest' />
-        <SearchHot :hotList='searchHotList' @changeSearchKeyword="handleSearch" v-show="!showSearchSuggest" />
-        <SearchSuggest v-show="showSearchSuggest" :searchSuggestList="searchSuggest" :searchKeyword='searchKeyword'  />
+        <SearchHead  @search="handleSearch" @changeSearchSuggest='handleSearchSuggest' />
+        <SearchHot @search="handleSearch" v-show="!searchState.showSearchSuggest"  />
+        <SearchSuggest v-show="searchState.showSearchSuggest && searchState.searchResult.code === -100" />
+        <SearchResult v-show="searchState.searchResult.code != -100" />
     </div>
 </template>
 
 <script>
-import { getSearchHot, getSearchDefaultKeyword } from '@/request/api.js'
+import { getSearchHot, getSearchDefaultKeyword, getSearchResultSong, getSearchSuggest } from '@/request/api.js'
 import SearchHead from './head'
 import SearchHot from './hot'
 import SearchSuggest from './searchSuggest'
-import { onMounted, ref } from 'vue'
+import SearchResult from './result'
+import { onMounted, onUnmounted } from 'vue'
+import { useSearchState, useSearchMethods } from './useSearch'
 export default {
     components: {
         SearchHead,
         SearchHot,
-        SearchSuggest
+        SearchSuggest,
+        SearchResult
     },
     setup (props, ctx) {
-        const searchHotList = ref([])
-        const defaultSearchKeyword = ref('')
-        const searchSuggest = ref({})
-        const showSearchSuggest = ref(false)
-        const searchKeyword = ref('')
+        const searchState = useSearchState()
+        const searchMethods = useSearchMethods()
         onMounted(() => {
             Promise.all([
                 getSearchHot(),
                 getSearchDefaultKeyword()
             ]).then(([hotResult, keyResult]) => {
-                searchHotList.value = hotResult.data
-                defaultSearchKeyword.value = keyResult.data.showKeyword
+                searchMethods.setSearchHotList(hotResult.data)
+                searchMethods.setDefaultSearchKeyword(keyResult.data.showKeyword)
             })
+        })
+
+        onUnmounted(() => {
+            // 清除全局数据
+            searchMethods.resetData()
         })
         // 搜索
         const handleSearch = function (keyword) {
-
+            getSearchResultSong(keyword || searchState.searchKeyword, 1018).then((res) => {
+                searchMethods.setSearchResult({ ...res.result, code: 200 })
+            })
         }
-        // 搜索建议
-        const handleSearchSuggest = function (result) {
-            if (result[0].code === -100) {
-                showSearchSuggest.value = false
-                searchSuggest.value = {}
-            } else {
-                searchSuggest.value = result[0]
-                showSearchSuggest.value = true
+        const handleSearchSuggest = function () {
+            if (!searchState.searchKeyword || searchState.searchKeyword.length <= 0) {
+                searchMethods.setShowSearchSuggest(false)
+                return false
             }
-            searchKeyword.value = result[1]
+            getSearchSuggest(searchState.searchKeyword).then(res => {
+                searchMethods.setSearchSuggest(res.result)
+                searchMethods.setShowSearchSuggest(true)
+                searchMethods.setSearchResult({ ...searchState.searchResult, code: -100 })// 每次输入的时候隐藏结果页面
+            })
         }
         return {
-            searchHotList,
-            defaultSearchKeyword,
             handleSearch,
             handleSearchSuggest,
-            showSearchSuggest,
-            searchSuggest,
-            searchKeyword
+            searchState
         }
     }
 }

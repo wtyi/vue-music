@@ -3,12 +3,12 @@
         <div class="search-input">
             <i class="iconfont icon-search"></i>
             <input type="text"
-                v-model="Keyword"
-                :placeholder="props.defaultKeyword"
+                v-model="searchState.searchKeyword"
+                :placeholder="searchState.defaultSearchKeyword"
                 @keydown.enter="searchKeyword"
                 @input="handleSearchInput"
              />
-            <i class="iconfont icon-close" v-if="searchKeyword && searchKeyword.length > 1"></i>
+            <i class="iconfont icon-close" v-if="searchState.searchKeyword && searchState.searchKeyword.length >= 1" @click="handleClearKeyword"></i>
         </div>
         <div class="cancel">
             <span @click="handleCancel">取消</span>
@@ -17,21 +17,16 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getSearchSuggest } from '@/request/api.js'
+import { useSearchState, useSearchMethods } from './useSearch'
 export default {
-    props: {
-        defaultKeyword: {
-            type: String,
-            default: '搜索点什么吧'
-        }
-    },
     setup (props, { emit }) {
-        const Keyword = ref('')
         const router = useRouter()
-        const searchKeyword = function () {
+        const searchState = useSearchState()
+        const searchMethods = useSearchMethods()
 
+        const searchKeyword = function () {
+            emit('search')
         }
         const handleCancel = function () {
             router.history.go(-1)
@@ -41,21 +36,25 @@ export default {
         const handleSearchInput = function () {
             timer && clearTimeout(timer)
             timer = setTimeout(async () => {
-                if (Keyword.value && Keyword.value.length > 0) {
-                    const result = await getSearchSuggest(Keyword.value)
-                    emit('changeSearchSuggest', [result.result, Keyword.value])
-                } else {
-                    emit('changeSearchSuggest', [{ code: -100 }, Keyword.value])
-                }
+                // 如果没有获取结果搜索 则进行联想
+                emit('changeSearchSuggest')
             }, 600)
         }
 
+        /**
+         * 清除已输入内容 并隐藏联想层
+         */
+        const handleClearKeyword = function () {
+            searchMethods.setSearchKeyword('')
+            searchMethods.setShowSearchSuggest(false)
+        }
+
         return {
-            props,
-            Keyword,
+            searchState,
             searchKeyword,
             handleCancel,
-            handleSearchInput
+            handleSearchInput,
+            handleClearKeyword
         }
     }
 }
@@ -89,6 +88,15 @@ export default {
             background-color: rgba(102, 100, 99, 0.3);
             color: #ddd;
             font-size: rem(13);
+            // animation: scale .3s;
+            // @keyframes scale{
+            //     0%{
+            //         width: 30%;
+            //     }
+            //     100%{
+            //         width: 100%;
+            //     }
+            // }
         }
         i {
             position: absolute;

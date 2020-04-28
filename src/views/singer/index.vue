@@ -1,7 +1,7 @@
 <template>
 <!-- 歌手单曲 -->
   <div class="singer_page">
-      <Head @onBack="routerBack" />
+      <Head />
       <Info :singerInfo='singerInfo' />
       <Foot :songList="songList" @onPlay="playSong" />
   </div>
@@ -13,8 +13,8 @@ import Head from './head'
 import Info from './info'
 import Foot from './foot'
 import { getSingerSongs } from '@/request/api.js'
-import { setSongList, setPlaySong } from '@/utils/music/index'
-import { useRouter, useRoute } from 'vue-router'
+import { setSongList, setPlaySong } from '@/core/music/index'
+import { useRoute } from 'vue-router'
 export default {
     components: {
         Head,
@@ -22,13 +22,9 @@ export default {
         Foot
     },
     setup (props, ctx) {
-        const router = useRouter()
         const route = useRoute()
         const songList = ref([])
         const singerInfo = ref({})
-        const routerBack = function () {
-            router.history.go(-1)
-        }
         const playSong = function (song) {
             setPlaySong(song)
             setSongList(songList)
@@ -44,7 +40,6 @@ export default {
         return {
             songList,
             singerInfo,
-            routerBack,
             playSong
         }
     }

@@ -18,11 +18,14 @@ export const setAudio = function (audio) {
  * 设置播放列表
  * @param {array} songList 歌曲列表
  */
+const feeStatus = [0, 8]
+let beforeSongList = []
 export const setSongList = function (songList) {
     if (state.playSong && (!songList.value || songList.value.some(song => song.id === state.playSong.id))) {
         return false
     }
-    songList && (state.songList = songList.value.filter(song => song.fee === 8))// 8免费 1好像会员
+    beforeSongList = state.songList
+    songList && (state.songList = songList.value.filter(song => feeStatus.includes(song.fee)))// 8免费 1好像会员
 }
 
 /**
@@ -64,6 +67,8 @@ export const setPlaySong = async function (song) {
             }
         }, 800)
     } else {
+        // 如果此次歌曲为不可播放则回滚下上的列表数据
+        state.songList = beforeSongList
         // 显示错误信息
         console.error(songResult)
         // 显示弹窗

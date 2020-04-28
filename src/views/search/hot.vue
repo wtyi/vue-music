@@ -3,7 +3,7 @@
         <!-- <h3>热门搜索 : </h3> -->
         <ul>
             <li class="search-hot-item"
-             v-for="(hot,index) in props.hotList"
+             v-for="(hot,index) in searchState.searchHotList"
             :key="hot.searchWord"
             @click="searchKeyword(hot)"
             >
@@ -28,16 +28,18 @@
 </template>
 
 <script>
+import { useSearchState } from './useSearch'
 export default {
     props: {
         hotList: Array
     },
     setup (props, { emit }) {
+        const searchState = useSearchState()
         const searchKeyword = function (hot) {
-            emit('changeSearchKeyword', hot.searchWord)
+            emit('search', hot.searchWord)
         }
         return {
-            props: props,
+            searchState,
             searchKeyword
         }
     }

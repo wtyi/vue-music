@@ -13,12 +13,13 @@
 </template>
 
 <script>
-import { getCurrentInstance } from 'vue'
+import { } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
-    setup (props, { emit }) {
-        const router = getCurrentInstance().ctx.$router
+    setup (props) {
+        const router = useRouter()
         const routerBack = function () {
-            emit('onBack')
+            router.history.go(-1)
         }
 
         return {

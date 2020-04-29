@@ -5,7 +5,7 @@
             <li class="search-hot-item"
              v-for="(hot,index) in searchState.searchHotList"
             :key="hot.searchWord"
-            @click="searchKeyword(hot)"
+            @click="handleClick(hot)"
             >
 
                 <span class="uuid" :class="{bold:index + 1 <= 3}">{{index + 1}}</span>
@@ -28,19 +28,19 @@
 </template>
 
 <script>
-import { useSearchState } from './useSearch'
+import { useSearchState } from '../useSearch'
 export default {
     props: {
         hotList: Array
     },
     setup (props, { emit }) {
         const searchState = useSearchState()
-        const searchKeyword = function (hot) {
+        const handleClick = function (hot) {
             emit('search', hot.searchWord)
         }
         return {
             searchState,
-            searchKeyword
+            handleClick
         }
     }
 }

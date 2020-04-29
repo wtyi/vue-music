@@ -1,12 +1,12 @@
 <template>
   <div class="head">
       <div class="back">
-          <span @click="routerBack">
+          <span @click="handleBack">
               <i class="iconfont icon-fanhui"></i>
           </span>
       </div>
       <div class="search">
-          <input type="text">
+          <input type="text" @click="handleInput">
           <span class="iconfont icon-search"></span>
       </div>
   </div>
@@ -18,12 +18,16 @@ import { useRouter } from 'vue-router'
 export default {
     setup (props) {
         const router = useRouter()
-        const routerBack = function () {
+        const handleBack = function () {
             router.history.go(-1)
+        }
+        const handleInput = function () {
+            router.push({ name: 'search' })
         }
 
         return {
-            routerBack
+            handleBack,
+            handleInput
         }
     }
 }

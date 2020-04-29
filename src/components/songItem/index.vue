@@ -8,57 +8,26 @@
                 <span>{{song.name}}</span>
             </div>
             <div class="song-singers">
-                <p>{{computedSingers(song.ar)}} . {{song.al.name}}</p>
+                <p>{{formatSinger(song.ar)}} . {{song.al.name}}</p>
             </div>
         </div>
         <div class="song-time">
-            <span>{{formatDt(song.dt)}}</span>
+            <span>{{formatSongtime(song.dt)}}</span>
         </div>
     </div>
 </template>
 
 <script>
+import formatSinger from '@/utils/formatSinger.js'
+import formatSongtime from '@/utils/formatSongtime.js'
 export default {
     props: {
         song: Object
     },
     setup (props) {
-        const computedSingers = function (ar) {
-            if (ar && ar.length === 1) {
-                return ar[0].alia ? ar[0].alia[0] : ar[0].name
-            } else if (ar && ar.length > 1) {
-                let str = ''
-                const names = ar.map(a => {
-                    if (a.alia && a.alia[0]) {
-                        return a.alia[0]
-                    } else {
-                        return a.name
-                    }
-                })
-                str = names.join('/')
-                return str
-            }
-        }
-        const formatDt = function (time) {
-            const s = Math.floor(time / 1000)
-            const m = Math.round(s / 60 * 10) / 10
-            const arr = m.toString().split('.')
-            const left = parseInt(arr[0])
-            const right = parseInt(arr[1])
-            if (right) {
-                const as = right * 60 / 10
-                if (as > 9) {
-                    return `${left}:${as}`
-                } else {
-                    return `${left}:0${as}`
-                }
-            } else {
-                return `${parseInt(left)}:00`
-            }
-        }
         return {
-            computedSingers,
-            formatDt,
+            formatSinger,
+            formatSongtime,
             song: props.song
         }
     }

@@ -18,7 +18,7 @@
 
 <script>
 import { useRouter } from 'vue-router'
-import { useSearchState, useSearchMethods } from './useSearch'
+import { useSearchState, useSearchMethods } from '../useSearch'
 export default {
     setup (props, { emit }) {
         const router = useRouter()
@@ -38,7 +38,7 @@ export default {
             timer = setTimeout(async () => {
                 // 如果没有获取结果搜索 则进行联想
                 emit('changeSearchSuggest')
-            }, 600)
+            }, 300)
         }
 
         /**
@@ -47,6 +47,9 @@ export default {
         const handleClearKeyword = function () {
             searchMethods.setSearchKeyword('')
             searchMethods.setShowSearchSuggest(false)
+            searchMethods.setShowSearchResult(false)
+            searchMethods.setActiveMenuIndex(0)
+            searchMethods.setSearchResultIndex(searchState.searchResultTypeList[0].index)
         }
 
         return {
@@ -67,6 +70,17 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: rem(20) 0;
+    width: 100%;
+    // height: 1.5rem;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    // z-index: 1;
+    // background: linear-gradient(
+    // to right,
+    //     rgba(27, 36, 59, 1),
+    //     rgba(23, 23, 37, 1)
+    // );
     .cancel {
         padding: rem(10) rem(5);
         span {

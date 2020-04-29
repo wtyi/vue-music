@@ -2,33 +2,34 @@
     <div class="result-menu">
         <ul>
             <span class="active" :style="activeSpanClass"></span>
-            <li data-index=1 @click="handleSwitch">综合</li>
-            <li data-index=2 @click="handleSwitch">歌曲</li>
-            <li data-index=3 @click="handleSwitch">视频</li>
-            <li data-index=4 @click="handleSwitch">歌单</li>
-            <li data-index=5 @click="handleSwitch">专辑</li>
-            <li data-index=6 @click="handleSwitch">歌手</li>
-            <li data-index=7 @click="handleSwitch">用户</li>
+            <li v-for="(menuItem,index) in searchState.searchResultTypeList" :key="menuItem.index" :data-index="index" @click="handleSwitch($event,menuItem.index)">{{menuItem.title}}</li>
         </ul>
     </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
+import { useSearchState, useSearchMethods } from '../useSearch'
 export default {
-    setup (props, ctx) {
-        const defaultIndex = ref(0)
+    props: {
+        menu: Array
+    },
+    setup (props, { emit }) {
+        const searchState = useSearchState()
+        const searchMethods = useSearchMethods()
         const activeSpanClass = computed(() => {
             return {
-                left: defaultIndex.value * 18 + 9 + '%'
+                left: searchState.activeMenuIndex * 18 + 9 + '%'
             }
         })
-        const handleSwitch = function (e) {
-            defaultIndex.value = e.target.dataset.index - 1
+        const handleSwitch = (e, index) => {
+            searchMethods.setActiveMenuIndex(e.target.dataset.index)
+            searchMethods.setSearchResultIndex(index)
         }
         return {
             activeSpanClass,
-            handleSwitch
+            handleSwitch,
+            searchState
         }
     }
 }

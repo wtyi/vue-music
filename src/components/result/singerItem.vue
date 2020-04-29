@@ -1,5 +1,5 @@
 <template>
-    <div class="singer_item">
+    <div class="singer_item" @click="handleClick">
         <div class="singer-pic">
             <img :src="props.singer.img1v1Url" alt />
         </div>
@@ -19,9 +19,11 @@ export default {
     props: {
         singer: Object
     },
-    setup (props) {
+    setup (props, { emit }) {
+        const handleClick = () => emit('singer', props.singer)
         return {
-            props
+            props,
+            handleClick
         }
     }
 }

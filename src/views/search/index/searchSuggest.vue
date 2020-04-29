@@ -54,7 +54,7 @@
 
 <script>
 import { computed } from 'vue'
-import { useSearchState } from './useSearch'
+import { useSearchState } from '../useSearch'
 export default {
     setup (props, ctx) {
         const searchState = useSearchState()

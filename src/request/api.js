@@ -73,6 +73,6 @@ export const getSearchSuggest = (keywords) => {
  * @param {e} keywords
  * @param {*} type
  */
-export const getSearchResultSong = (keywords, type) => {
-    return axios.get('/search', { params: { keywords, type } })
+export const getSearchResultSong = (keywords, type, offset = 0, limit = 15) => {
+    return axios.get('/search', { params: { keywords, type, offset, limit } })
 }

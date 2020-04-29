@@ -1,5 +1,5 @@
 <template>
-  <div class="songlist_item">
+  <div class="songlist_item" @click="handleClick">
               <div class="songlist-pic">
             <img :src="props.playList.coverImgUrl" alt />
         </div>
@@ -23,10 +23,12 @@ export default {
     props: {
         playList: Object
     },
-    setup (props) {
+    setup (props, { emit }) {
+        const handleClick = () => emit('playlist', props.playList)
         return {
             props,
-            formatCount
+            formatCount,
+            handleClick
         }
     }
 }
@@ -57,6 +59,7 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         h3 {
+            max-width: 60%;
             font-size: rem(14);
             @include textOverflow();
         }

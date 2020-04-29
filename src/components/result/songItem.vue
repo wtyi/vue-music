@@ -1,25 +1,29 @@
 <template>
-    <div class="song_item" v-if="props.song">
-        <div class="song-pic">
+    <div class="song_item" v-if="props.song" @click="handleClick">
+        <div class="song-pic" v-if="props.song.al">
             <img :src="props.song.al.picUrl" alt />
         </div>
         <div class="song-info">
             <h3>{{props.song.name}}</h3>
-            <p>{{props.song.al.name}}</p>
+            <p>{{formatSinger(props.song.ar || props.song.artists)}} - {{props.song.al ? props.song.al.name : props.song.album.name}}</p>
         </div>
     </div>
 </template>
 
 <script>
+import formatSinger from '@/utils/formatSinger.js'
 export default {
     props: {
         song: {
             type: Object
         }
     },
-    setup (props) {
+    setup (props, { emit }) {
+        const handleClick = () => emit('song', props.song)
         return {
-            props
+            props,
+            formatSinger,
+            handleClick
         }
     }
 }

@@ -49,6 +49,7 @@ export const changePlayStatus = function (status = null) {
  */
 export const setPlaySong = async function (song) {
     if (state.playSong && song.id === state.playSong.id) {
+        changePlayStatus()
         return false
     }
     // 当成功获取音乐URL后才会赋值信息

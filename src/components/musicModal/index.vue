@@ -164,6 +164,7 @@ $rightColor: rgba(54, 114, 241, 1);
     min-height: rem(60) !important;
     transform: translateY(100%);
     transition: transform .5s;
+    z-index: 3;
 }
 
 .song{

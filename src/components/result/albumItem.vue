@@ -1,5 +1,5 @@
 <template>
-    <div class="album_item">
+    <div class="album_item" @click="handleClick">
         <div class="album-pic">
             <img :src="props.album.picUrl" alt />
         </div>
@@ -22,10 +22,14 @@ export default {
     props: {
         album: Object
     },
-    setup (props) {
+    setup (props, { emit }) {
+        const handleClick = () => {
+            emit('album', props.album)
+        }
         return {
             props,
-            formatTime
+            formatTime,
+            handleClick
         }
     }
 }

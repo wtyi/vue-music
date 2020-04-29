@@ -1,29 +1,48 @@
-<<<<<<< HEAD
-# music
+# vue-music 👏👏👏
 
-## Project setup
-```
-npm install
-```
+使用vue3.0写的一个音乐webapp(...)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+写的挺乱bug肯定很多的,大佬们证明自己的时候到了！！！轻点喷...谢谢！！！
 
-### Compiles and minifies for production
-```
-npm run build
-```
+一直想做个东西不知道做啥某天逛掘金的时候发现了新大陆[「 这个设计有点优秀 」](https://juejin.im/topic/5bde463e092dcb7eb99bfa95)专区看到了一些优秀的ui图有点想法...
 
-### Lints and fixes files
-```
-npm run lint
-```
+- 接口使用开源项目[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 感谢~
+- 因审美不佳,部分UI参考掘金用户[美术课代表](https://juejin.im/user/5b3ed5bc5188251b24381283)发布的一些ui图,感谢~~
+- 在线[预览](https://hiwty.com/music)地址 [https://hiwty.com/music](https://hiwty.com/music)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
-# vue-music
-vue3 &amp;&amp; music 😀
->>>>>>> a28635f237365450c60f7efed3c96b1cc0091966
+## 已完成
+- [x] 首页
+- [x] 歌手详情
+- [x] 搜索(歌曲,专辑,歌手,歌单)
+- [x] 歌曲播放
+
+## 未完成
+- [ ] 歌单页
+- [ ] 专辑页
+- [ ] MV页
+
+## 剩下的
+我再看看...
+
+
+## 遇到的一些问题
+### ios下无法自动播放,部分事件无效
+
+解决方法:定时器延迟...(想不出来啥好的了)
+
+
+
+## 页面预览
+在线[预览](https://hiwty.com/music)地址 [https://hiwty.com/music](https://hiwty.com/music)
+
+### 首页
+
+### 歌手
+
+### 搜索
+
+### 专辑
+
+### 歌单
+
+### MV

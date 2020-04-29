@@ -1,6 +1,8 @@
 <template>
     <div id="layout">
-        <router-view />
+        <keep-alive>
+            <router-view :include="['Home']" />
+        </keep-alive>
         <!-- 歌曲列表 当前播放歌曲ID -->
         <MusicModal :state="state" />
         <Loading :show="showLoading" />

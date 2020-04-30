@@ -1,5 +1,5 @@
 // 时间格式化 "YYYY-MM-DD HH:mm:SS"
-export default (time, type = 'YYYY-MM-DD HH:mm:SS') => {
+export default (time, type = 'YYYY-MM-DD') => {
     const date = new Date(time)
     const year = date.getFullYear()// 年
     const mouth = date.getMonth() + 1// 月

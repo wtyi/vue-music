@@ -29,6 +29,7 @@ import SearchResult from '../result/index'
 import searchLoading from '@/components/loading/search'
 import { onMounted, onUnmounted } from 'vue'
 import { useSearchState, useSearchMethods } from '../useSearch'
+import { useRouter } from 'vue-router'
 export default {
     components: {
         SearchHead,
@@ -40,6 +41,15 @@ export default {
     setup (props, ctx) {
         const searchState = useSearchState()
         const searchMethods = useSearchMethods()
+
+        const router = useRouter()
+        onUnmounted(() => {
+            // 如果是返回
+            if (router.history.state.forward && router.history.state.forward.fullPath === '/search') {
+                // 清除全局数据
+                searchMethods.resetData()
+            }
+        })
         onMounted(() => {
             Promise.all([getSearchHot(), getSearchDefaultKeyword()]).then(
                 ([hotResult, keyResult]) => {
@@ -49,11 +59,6 @@ export default {
                     )
                 }
             )
-        })
-
-        onUnmounted(() => {
-            // 清除全局数据
-            searchMethods.resetData()
         })
         // 搜索
         const handleSearch = function (keyword) {

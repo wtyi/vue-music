@@ -7,6 +7,7 @@
             <h3>{{props.song.name}}</h3>
             <p>{{formatSinger(props.song.ar || props.song.artists)}} - {{props.song.al ? props.song.al.name : props.song.album.name}}</p>
         </div>
+        <span class="iconfont icon-play play"></span>
     </div>
 </template>
 
@@ -45,7 +46,7 @@ export default {
         }
     }
     .song-info {
-        width: 83%;
+        width: 80%;
         flex: 1;
         margin-left: rem(8);
         height: 100%;
@@ -66,5 +67,9 @@ export default {
             @include textOverflow()
         }
     }
+}
+.play{
+    font-size: rem(22);
+    color: #aaa;
 }
 </style>

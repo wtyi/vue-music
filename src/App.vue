@@ -1,8 +1,10 @@
 <template>
     <div id="layout">
-        <keep-alive>
-            <router-view :include="['Home']" />
-        </keep-alive>
+        <!-- <transition name="app" mode="out-in"> -->
+            <keep-alive :include="['Home']">
+                <router-view />
+            </keep-alive>
+        <!-- </transition> -->
         <!-- 歌曲列表 当前播放歌曲ID -->
         <MusicModal :state="state" />
         <Loading :show="showLoading" />
@@ -40,7 +42,9 @@ export default {
 <style lang="scss">
 @import url(./assets/scss/reset.scss);
 @import url(./assets/scss/global.scss);
-
+html,body{
+    background: linear-gradient(to right, rgba(27, 36, 59, 1.000), rgba(23, 23, 37, 1.000));
+}
 #layout {
     width: 100%;
     min-height: 100vh;
@@ -48,5 +52,21 @@ export default {
         width: 100%;
         min-height: 100vh;
     }
+}
+
+.app-enter {
+    opacity: 0;
+}
+.app-leave {
+    opacity: 1;
+}
+.app-leave-active {
+    opacity: 0;
+    transition: opacity 10.3s;
+}
+
+.app-enter-active {
+    opacity: 1;
+    transition: opacity 10.3s;
 }
 </style>

@@ -1,3 +1,4 @@
+import { isRef } from 'vue'
 import state from './state'
 import { getPlaySongUrl } from '@/request/api'
 import Modal from '@/components/modal/index.js'
@@ -21,11 +22,13 @@ export const setAudio = function (audio) {
 const feeStatus = [0, 8]
 let beforeSongList = []
 export const setSongList = function (songList) {
-    if (state.playSong && (!songList.value || songList.value.some(song => song.id === state.playSong.id))) {
+    songList = Array.from(songList)
+    // 当无播放音乐 直接赋值歌单列表
+    if (state.playSong && (!songList || songList.some(song => song.id === state.playSong.id))) {
         return false
     }
     beforeSongList = state.songList
-    songList && (state.songList = songList.value.filter(song => feeStatus.includes(song.fee)))// 8免费 1好像会员
+    songList && (state.songList = songList.filter(song => feeStatus.includes(song.fee)))// 8免费 1好像会员
 }
 
 /**

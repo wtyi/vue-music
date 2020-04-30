@@ -27,7 +27,7 @@ export default {
         const singerInfo = ref({})
         const playSong = function (song) {
             setPlaySong(song)
-            setSongList(songList)
+            setSongList(songList.value)
         }
         onMounted(() => {
             const { id } = route.params

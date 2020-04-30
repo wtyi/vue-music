@@ -11,7 +11,7 @@
 <script>
 import SongItem from '@/components/result/songItem'
 import { useSearchState } from '../useSearch'
-import { setPlaySong } from '@/core/music/setter.js'
+import { setPlaySong, setSongList } from '@/core/music/setter.js'
 import { computed } from 'vue'
 export default {
     components: {
@@ -24,6 +24,7 @@ export default {
         })
         const handleClickSong = (song) => {
             setPlaySong(song)
+            setSongList(searchState.searchResult.song.songs)
         }
         return {
             searchResult,

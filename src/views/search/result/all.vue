@@ -22,7 +22,7 @@
             <h2>专辑</h2>
             <ul>
                 <li v-for="album in searchResult.album.albums" :key="album.id">
-                    <AlbumItem :album="album" />
+                    <AlbumItem :album="album" @album="handleClickAlbum" />
                 </li>
             </ul>
             <p class="more" @click="handleMores(3)">{{searchResult.album.moreText}} &nbsp;></p>
@@ -45,7 +45,7 @@ import SingerItem from '@/components/result/singerItem'
 import AlbumItem from '@/components/result/albumItem'
 import SongListItem from '@/components/result/songListItem'
 import { useSearchState, useSearchMethods } from '../useSearch'
-import { setPlaySong } from '@/core/music/setter.js'
+import { setPlaySong, setSongList } from '@/core/music/setter.js'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 export default {
@@ -66,7 +66,11 @@ export default {
             const id = artist.id
             router.push({ name: 'singer', params: { id } })
         }
-        const handleClickSong = (song) => setPlaySong(song)
+        const handleClickSong = (song) => {
+            setPlaySong(song)
+            setSongList(searchState.searchResult.all.song.songs)
+        }
+        const handleClickAlbum = (album) => album && router.push({ name: 'album', params: { id: album.id } })
         /**
          * 具体详情页面
          */
@@ -78,6 +82,7 @@ export default {
             searchResult,
             handleClickSong,
             handleClickArtist,
+            handleClickAlbum,
             handleMores
         }
     }

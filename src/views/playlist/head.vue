@@ -1,79 +1,60 @@
 <template>
-    <div class="album_head" v-if="Object.keys(album).length > 0">
+    <div class="album_head" v-if="playlistInfo">
         <div class="album-nav">
             <span class="iconfont icon-fanhui" @click="handleBack"></span>
-            <h3>专辑</h3>
+            <h3>歌单</h3>
             <span></span>
         </div>
-        <div class="album-info">
+        <div class="album-info" v-show="playlistInfo.creator">
             <div class="album-pic">
-                <img :src="album.picUrl" alt />
+                <img :src="playlistInfo.coverImgUrl" alt />
             </div>
             <div class="album-metadata">
-                <h3>{{album.name}}</h3>
+                <h3>{{playlistInfo.name}}</h3>
                 <div class="singer">
-                    <img :src="album.artist.picUrl" alt />
-                    <span>{{album.artist.name}}</span>
-                    <div class="view" @click="handleViewSinger(album.artist.id)">view</div>
+                    <img :src="playlistInfo.creator.avatarUrl" alt />
+                    <span>{{playlistInfo.creator.nickname}}</span>
+                </div>
+                <div class="tags">
+                    <span v-for="tag in playlistInfo.tags" :key="tag">{{tag}}</span>
                 </div>
                 <div class="album-desc" @click="setShowDescBox(true)">
-                    <p>简介:{{album.description}}</p>
+                    <p>简介:{{playlistInfo.description}}</p>
                     <span class="iconfont icon-arrow-right"></span>
                 </div>
             </div>
         </div>
-        <div class="album-data-count">
+        <div class="album-data-count" v-show="playlistInfo.playCount">
             <ul>
                 <li>
-                    <span class="iconfont icon-heart"></span>
-                    <span class="count">{{formatCount(album.info.likedCount,false)}}</span>
+                    <span class="iconfont icon-play"></span>
+                    <span class="count">{{formatCount(playlistInfo.playCount,false)}}</span>
                 </li>
                 <li>
-                    <span class="iconfont icon-heart"></span>
-                    <span class="count">{{formatCount(album.info.likedCount,false)}}</span>
+                    <span class="iconfont icon-sub"></span>
+                    <span class="count">{{formatCount(playlistInfo.subscribedCount,false)}}</span>
                 </li>
                 <li>
-                    <span class="iconfont icon-heart"></span>
-                    <span class="count">{{formatCount(album.info.likedCount,false)}}</span>
+                    <span class="iconfont icon-shard"></span>
+                    <span class="count">{{formatCount(playlistInfo.shareCount,false)}}</span>
+                </li>
+                <li>
+                    <span class="iconfont icon-comment"></span>
+                    <span class="count">{{formatCount(playlistInfo.commentCount,false)}}</span>
                 </li>
             </ul>
         </div>
         <div class="album-description-box" v-if="showDescriptionBox">
-            <div class="desc" v-show="album.blurPicUrl" :style="{backgroundImage:`url(${album.blurPicUrl})`}">
+            <div class="desc" v-show="playlistInfo.coverImgUrl" :style="{backgroundImage:`url(${playlistInfo.coverImgUrl})`}">
                 <div class="blur"></div>
                 <div class="content">
                     <div class="album-pic">
                         <img
-                            :src="album.picUrl"
+                            :src="playlistInfo.coverImgUrl"
                             alt
                         />
                     </div>
-                    <div class="album_data">
-                        <ul>
-                            <li>
-                                <span>专辑：{{album.name}}</span>
-                            </li>
-                            <!-- <li>
-                                <span>语种：</span>
-                                <span class="block">国语</span>
-                            </li> -->
-                            <li>
-                                <span>发行时间：{{formatTime(album.publishTime)}}</span>
-                            </li>
-                            <li>
-                                <span>唱片公司：</span>
-                                <span class="block">{{album.company}}</span>
-                            </li>
-                            <li>
-                                <span>类型：{{album.subType}}</span>
-                            </li>
-                            <!-- <li>
-                                <span>流派：</span>
-                                <span>POP流行</span>
-                            </li> -->
-                        </ul>
-                    </div>
-                    <p>{{album.description}}</p>
+                    <p>{{playlistInfo.description}}</p>
                 </div>
                 <div class="close" @click="setShowDescBox(false)">
                     <span class="iconfont icon-close"></span>
@@ -91,21 +72,45 @@ import formatCount from '@/utils/formatCount'
 import { useRouter } from 'vue-router'
 export default {
     props: {
-        albumData: Object
+        playlistInfo: Object
     },
     setup (props) {
         const showDescriptionBox = ref(false)
         const router = useRouter()
         const setShowDescBox = bool => (showDescriptionBox.value = !!bool)
-        const album = computed(() => {
-            return props.albumData.album
-        })
         const handleBack = () => router.history.go(-1)
         const handleViewSinger = id => router.push({ name: 'singer', params: { id } })
+        const playlistInfo = computed(() => {
+            console.log(props)
+            const {
+                playCount,
+                subscribedCount,
+                shareCount,
+                commentCount,
+                tags,
+                coverImgUrl,
+                createTime,
+                creator,
+                description,
+                name
+            } = props.playlistInfo
+            return {
+                playCount,
+                subscribedCount,
+                shareCount,
+                commentCount,
+                tags,
+                coverImgUrl,
+                createTime,
+                creator,
+                description,
+                name
+            }
+        })
         return {
             showDescriptionBox,
             setShowDescBox,
-            album,
+            playlistInfo,
             formatTime,
             formatCount,
             handleBack,
@@ -156,6 +161,7 @@ export default {
         justify-content: space-around;
         h3 {
             font-size: rem(14);
+            @include textOverflow;
         }
         .singer {
             display: flex;
@@ -176,7 +182,7 @@ export default {
                 font-size: rem(12);
                 margin-left: rem(6);
                 background-color: #38d;
-                color: #ddd;
+                color: #fff;
             }
         }
         .album-desc {
@@ -203,8 +209,11 @@ export default {
         align-items: center;
         li {
             padding: rem(5);
+            display: flex;
+            align-items: center;
             span:nth-child(2) {
                 padding-left: rem(5);
+                 color:#ddd;
             }
         }
     }
@@ -278,28 +287,10 @@ export default {
         z-index: 5;
          border-radius: 6px;
         & > p {
-            max-height: 22vh;
+            max-height: 42vh;
             overflow-y: scroll;
             padding: 0 rem(15);
             color: #ddd;
-        }
-        .album_data {
-            max-height: 22vh;
-            padding: rem(10) 0;
-            overflow: hidden;
-            text-align: center;
-            ul {
-                li {
-                    padding: rem(5) 0;
-                    span {
-                        font-size: rem(13);
-                        color: #ddd;
-                        &.block {
-                            color: #fff;
-                        }
-                    }
-                }
-            }
         }
         .album-pic {
             height: 15vh;
@@ -315,6 +306,20 @@ export default {
             line-height: rem(20);
             font-size: rem(12);
         }
+    }
+}
+
+.tags{
+    display: flex;
+    align-items: center;
+    span{
+        font-size: rem(12);
+        padding: rem(3) rem(5);
+        border: 1px solid #38d;
+        border-radius: 6px;
+        transform: scale(.8);
+        color: #fff;
+        background-color: #38f;
     }
 }
 </style>

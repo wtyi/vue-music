@@ -31,7 +31,7 @@
             <h2>歌单</h2>
             <ul>
                 <li v-for="playList in searchResult.playList.playLists" :key="playList.id">
-                    <SongListItem :playList="playList" />
+                    <SongListItem :playList="playList" @playlist='handleClickPlaylist' />
                 </li>
             </ul>
             <p class="more" @click="handleMores(4)">{{searchResult.playList.moreText}}  &nbsp;></p>
@@ -71,6 +71,8 @@ export default {
             setSongList(searchState.searchResult.all.song.songs)
         }
         const handleClickAlbum = (album) => album && router.push({ name: 'album', params: { id: album.id } })
+        const handleClickPlaylist = playlist => playlist && router.push({ name: 'playlist', params: { id: playlist.id } })
+
         /**
          * 具体详情页面
          */
@@ -83,6 +85,7 @@ export default {
             handleClickSong,
             handleClickArtist,
             handleClickAlbum,
+            handleClickPlaylist,
             handleMores
         }
     }

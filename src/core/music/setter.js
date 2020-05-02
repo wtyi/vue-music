@@ -1,4 +1,3 @@
-import { isRef } from 'vue'
 import state from './state'
 import { getPlaySongUrl } from '@/request/api'
 import Modal from '@/components/modal/index.js'
@@ -22,7 +21,12 @@ export const setAudio = function (audio) {
 const feeStatus = [0, 8]
 let beforeSongList = []
 export const setSongList = function (songList) {
-    songList = Array.from(songList)
+    if (!songList) {
+        return false
+    }
+    if (!Array.isArray(songList)) {
+        songList = Array.from(songList)
+    }
     // 当无播放音乐 直接赋值歌单列表
     if (state.playSong && (!songList || songList.some(song => song.id === state.playSong.id))) {
         return false
@@ -95,6 +99,8 @@ export const playNextSong = function () {
     })
     const len = state.songList.length
     if (currentIndex + 1 >= len) {
+        state.status = false
+        state.audio.pause()
         return false// 无下一首
     }
     // 播放下一首
@@ -115,6 +121,8 @@ export const playPrevSong = function () {
         }
     })
     if (currentIndex - 1 < 0) {
+        state.status = false
+        state.audio.pause()
         return false// 无上一首
     }
     // 播放上一首

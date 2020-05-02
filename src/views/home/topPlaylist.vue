@@ -1,36 +1,42 @@
 <template>
-<!-- recent fashion 近期流行.. -->
-  <div class="recent">
+  <div class="top_play_list">
       <div class="title">
-          <h1>推荐歌曲 </h1>
+          <h1>精品歌单 </h1>
           <span class="more">
               <i class="iconfont icon-arrow-right"></i>
           </span>
       </div>
-      <div class="recent-song-List">
+      <div class="playlist-List">
           <ul>
-              <li v-for="song in state.songList" :key="song.id" :style="{backgroundImage:`url(${song.picUrl})`}">
+              <li v-for="song in state.playlist" :key="song.id" :style="{backgroundImage:`url(${song.coverImgUrl})`}" @click="handleClickPlaylist(song)">
               </li>
+              <span class="loadMore" v-load="loadMore">loading...</span>
           </ul>
       </div>
   </div>
 </template>
 
 <script>
-import { getNewSong } from '@/request/api.js'
+import { getIndexPlaylist } from '@/request/api.js'
 import { onMounted, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
     setup (props, ctx) {
         const state = reactive({
-            songList: []
+            playlist: []
         })
+        const router = useRouter()
         onMounted(() => {
-            getNewSong().then(({ result }) => {
-                state.songList = result
+            getIndexPlaylist().then(({ playlists }) => {
+                state.playlist = playlists
             })
         })
+        const handleClickPlaylist = (playlist) => playlist && router.push({ name: 'playlist', params: { id: playlist.id } })
+        const loadMore = () => state.playlist && state.playlist.length > 0 && (console.log('加载'))
         return {
-            state
+            state,
+            handleClickPlaylist,
+            loadMore
         }
     }
 }
@@ -38,7 +44,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/scss/mixin.scss";
-.recent{
+.top_play_list{
     margin-top: rem(50);
     .title{
         padding: rem(15) 0;
@@ -58,7 +64,7 @@ export default {
     }
 }
 
-.recent-song-List{
+.playlist-List{
     ul{
         overflow-x: scroll;
         overflow-y: hidden;
@@ -83,5 +89,8 @@ export default {
             }
         }
     }
+}
+.loadMore{
+    color: transparent;
 }
 </style>

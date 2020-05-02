@@ -76,3 +76,18 @@ export const getSearchSuggest = (keywords) => {
 export const getSearchResultSong = (keywords, type, offset = 0, limit = 15) => {
     return axios.get('/search', { params: { keywords, type, offset, limit } })
 }
+
+/**
+ * 获取歌单内容
+ * @param {} id
+ */
+export const getPlaylistInfo = id => {
+    return axios.get('/playlist/detail', { params: { id } })
+}
+
+/**
+ * 获取首页精品歌单
+ */
+export const getIndexPlaylist = () => {
+    return axios.get('/top/playlist/highquality')
+}

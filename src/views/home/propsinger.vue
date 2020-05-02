@@ -31,13 +31,14 @@
                 </div>
             </li>
         </ul>
+        <p class="loadMore" v-load="loadMore"></p>
     </div>
   </div>
 </template>
 
 <script>
 import { getTopSinger } from '@/request/api.js'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 import Modal from '@/components/modal/index.js'
 import { useRouter } from 'vue-router'
 export default {
@@ -47,6 +48,10 @@ export default {
     setup (props, ctx) {
         const state = reactive({
             singers: []
+        })
+        const rules = reactive({
+            offset: 0,
+            limit: 20
         })
         // 获取router实例
         const router = useRouter()
@@ -61,14 +66,26 @@ export default {
         }
 
         onMounted(() => {
-            getTopSinger().then(({ artists: singers }) => {
-                state.singers = singers
+            getTopSinger(rules).then(({ artists: singers }) => {
+                state.singers = state.singers.concat(singers)
             })
         })
 
+        /**
+         * 加载更多
+         */
+        watch(() => rules.offset, () => {
+            getTopSinger(rules).then(({ artists: singers }) => {
+                state.singers = state.singers.concat(singers)
+            })
+        })
+        const loadMore = () => {
+            rules.offset += rules.limit
+        }
         return {
             state,
-            singSingerSong
+            singSingerSong,
+            loadMore
         }
     }
 }
@@ -189,5 +206,11 @@ $rightColor:rgba(54, 114, 241, 1.000);
              font-weight: bold;
         }
     }
+}
+
+.loadMore{
+    color: transparent;
+    text-align: center;
+    font-size: 12px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div id="layout">
-        <!-- <transition name="app" mode="out-in"> -->
+        <!-- <transition name="fade" > -->
             <keep-alive :include="['Home']">
                 <router-view />
             </keep-alive>
@@ -52,21 +52,5 @@ html,body{
         width: 100%;
         min-height: 100vh;
     }
-}
-
-.app-enter {
-    opacity: 0;
-}
-.app-leave {
-    opacity: 1;
-}
-.app-leave-active {
-    opacity: 0;
-    transition: opacity 10.3s;
-}
-
-.app-enter-active {
-    opacity: 1;
-    transition: opacity 10.3s;
 }
 </style>

@@ -45,14 +45,14 @@ export default {
     flex: 1;
     height: rem(65);
     .album-pic {
-        width: 17%;
+        width: rem(65);
         img {
             border-radius: 3px;
             width: rem(50);
         }
     }
     .album-info {
-        width: 83%;
+        width: rem(250);
         flex: 1;
         margin-left: rem(8);
         display: flex;
@@ -76,6 +76,7 @@ export default {
     }
 }
 .more {
+    width: rem(20);
     span {
         color: #ddd;
         font-size: rem(13);

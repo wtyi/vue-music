@@ -29,7 +29,7 @@
             >
                 <ResultSongList />
             </div>
-            <div class="loadingMore" v-show="!searchState.isLoading" ref="loadMore">
+            <div class="loadingMore" v-show="!searchState.isLoading" v-load="loadMore">
                 <p >加载中...</p>
             </div>
         </div>
@@ -82,20 +82,9 @@ export default {
                     })
             }
         )
-        const loadMore = ref(null)
-        watch(() => loadMore.value, () => {
-            var intersectionObserver = new IntersectionObserver(
-                function (entries) {
-                    // 如果不可见，就返回
-                    if (entries[0].intersectionRatio <= 0) return
-                    searchState.searchResultIndex !== searchState.searchResultTypeList[0].index && loadMoreResult()
-                })
-
-            // 开始观察
-            intersectionObserver.observe(
-                loadMore.value
-            )
-        })
+        const loadMore = () => {
+            searchState.searchResultIndex !== searchState.searchResultTypeList[0].index && loadMoreResult()
+        }
         return {
             searchState,
             loadMore

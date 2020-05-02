@@ -35,7 +35,7 @@ const setSearchResult = result => {
     if (searchState.searchResultIndex === searchState.searchResultTypeList[0].index) {
         searchState.searchResult[type] = result
     } else {
-        const keys = Object.keys(result)
+        const keys = Object.keys(result).filter(str => !str.includes('query'))
         if (keys[0].includes('Count')) {
             searchState.searchResult[type] = { data: result[keys[1]], count: result[keys[0]] }
         } else {
@@ -83,7 +83,7 @@ export const loadMoreResult = () => {
     }
     searchState.offset += searchState.limit
     getSearchResultSong(searchState.searchKeyword, searchState.searchResultIndex, searchState.offset, searchState.limit).then(({ result }) => {
-        const keys = Object.keys(result)
+        const keys = Object.keys(result).filter(str => !str.includes('query'))
         if (keys[1].includes('Count')) {
             searchState.searchResult[type].data = searchState.searchResult[type].data.concat(result[keys[0]])
         } else {

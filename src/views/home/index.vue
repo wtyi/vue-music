@@ -4,7 +4,7 @@
         <!-- 首页顶部搜索 -->
         <Head />
         <Album />
-        <Recent />
+        <TopPlaylist />
         <PopSinger />
     </div>
 </keep-alive>
@@ -13,13 +13,13 @@
 <script>
 import Head from './head'
 import Album from './album.vue'
-import Recent from './recent'
+import TopPlaylist from './topPlaylist'
 import PopSinger from './propsinger'
 export default {
     components: {
         Head,
         Album,
-        Recent,
+        TopPlaylist,
         PopSinger
     },
     setup (...props) {

@@ -41,19 +41,17 @@ export default {
     padding: rem(3) 0;
     display: flex;
     align-items: center;
-    flex: 1;
     height: rem(65);
     .songlist-pic {
-        width: 17%;
+        width: rem(65);
         img {
             border-radius: 3px;
             width: rem(50);
         }
     }
     .songList-info {
-        width: 83%;
+        width: rem(240);
         flex: 1;
-        margin-left: rem(8);
         display: flex;
         height: 100%;
         flex-direction: column;
@@ -82,6 +80,7 @@ export default {
         }
     }
     .more{
+        width: rem(30);
         span{
             color: #ddd;
             font-size: rem(12);

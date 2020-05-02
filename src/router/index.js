@@ -3,6 +3,7 @@ import Home from '../views/home/index.vue'
 import Singer from '../views/singer/index.vue'
 import Album from '../views/album/index.vue'
 import Search from '../views/search/index/index.vue'
+import Playlist from '../views/playlist/index.vue'
 
 const routes = [
     {
@@ -22,6 +23,10 @@ const routes = [
         path: '/search',
         name: 'search',
         component: Search
+    }, {
+        path: '/playlist/:id',
+        name: 'playlist',
+        component: Playlist
     }
 ]
 

@@ -1,7 +1,7 @@
 <template>
     <div class="music_modal" :style="defaultStyle" v-hammer:swipe.down="hideMusicModal">
         <div class="song">
-            <span>{{state.playSong && state.playSong.name}} - {{computedSingers(state.playSong && state.playSong.ar)}}</span>
+            <span>{{state.playSong && state.playSong.name}} - {{formatSinger(state.playSong && (state.playSong.ar || state.playSong.artists))}}</span>
         </div>
         <div class="music-menu">
             <div class="left">
@@ -34,6 +34,7 @@
 import { computed } from 'vue'
 import useMove from './index.js'
 import * as musicMethods from '@/core/music/index.js'
+import formatSinger from '@/utils/formatSinger'
 export default {
     props: {
         state: {
@@ -45,22 +46,6 @@ export default {
         }
     },
     setup (props, ctx) {
-        const computedSingers = function (ar) {
-            if (ar && ar.length === 1) {
-                return ar[0].alia ? ar[0].alia[0] : ar[0].name
-            } else if (ar && ar.length > 1) {
-                let str = ''
-                const names = ar.map(a => {
-                    if (a.alia && a.alia[0]) {
-                        return a.alia[0]
-                    } else {
-                        return a.name
-                    }
-                })
-                str = names.join('/')
-                return str
-            }
-        }
         const defaultStyle = computed(() => {
             return props.state.showModal ? { transform: 'translateY(0%)' } : { transform: 'translateY(100%)' }
         })
@@ -124,7 +109,7 @@ export default {
 
         return {
             state: props.state,
-            computedSingers,
+            formatSinger,
             hideMusicModal,
             showMusicModal,
             setPlayMode,

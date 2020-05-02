@@ -1,8 +1,9 @@
 <template>
   <div class="album-song">
       <ul>
-          <li v-for="song in songs" :key="song.id">
-              <SongItem :song="song" @song="handleClickSong" />
+          <li v-for="(song,index) in songs" :key="song.id">
+              <span class="index">{{index + 1}}</span>
+              <SongItem :song="song" :showPic="false" @song="handleClickSong" />
           </li>
       </ul>
   </div>
@@ -43,6 +44,13 @@ export default {
 ul{
         li{
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            span.index{
+                font-size: rem(14);
+                color: #ddd;
+                padding-right: rem(12);
+            }
             &:last-child {
                 border: none;
             }

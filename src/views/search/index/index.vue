@@ -7,7 +7,7 @@
                 v-show="!searchState.showSearchSuggest && !searchState.showSearchResult"
             />
         <!-- </keep-alive> -->
-        <SearchSuggest v-show="searchState.showSearchSuggest && !searchState.showSearchResult" />
+        <SearchSuggest @search="handleSearch" v-show="searchState.showSearchSuggest && !searchState.showSearchResult" />
         <SearchResult v-show="searchState.showSearchResult" />
         <div class="loading" v-if="searchState.isLoading">
             <searchLoading />

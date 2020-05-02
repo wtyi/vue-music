@@ -1,6 +1,6 @@
 <template>
     <div class="search_suggest">
-        <p class="noResult" v-show="suggestList.code == -100">去搜索"{{searchState.searchKeyword}}"</p>
+        <p class="noResult" v-show="suggestList.code == -100" @click="handleSearchKeyword">去搜索"{{searchState.searchKeyword}}"</p>
         <ul v-show="suggestList.code == 200">
             <div class="showIcon">
                 <div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <template v-if="suggestList.artists.length > 0">
-                <li class="suggest-item" v-for="singer in suggestList.artists" :key="singer.id">
+                <li class="suggest-item" v-for="singer in suggestList.artists" :key="singer.id" @click="handleClickSinger(singer)">
                     <span class="iconfont icon-singer icon"></span>
                     <div class="desc">
                         <span class="block">{{singer.first}}</span>
@@ -27,7 +27,7 @@
                 </li>
             </template>
             <template v-if="suggestList.albums.length > 0">
-                <li class="suggest-item" v-for="album in suggestList.albums" :key="album.id">
+                <li class="suggest-item" v-for="album in suggestList.albums" :key="album.id" @click="handleClickAlbum(album)">
                     <span class="iconfont icon-album"></span>
                     <div class="desc">
                         <span class="block">{{album.first}}</span>
@@ -38,7 +38,7 @@
                 </li>
             </template>
             <template v-if="suggestList.songs.length > 0">
-                <li class="suggest-item" v-for="song in suggestList.songs" :key="song.id">
+                <li class="suggest-item" v-for="song in suggestList.songs" :key="song.id" @click="handleClickSong(song)">
                     <span class="iconfont icon-music"></span>
                     <div class="desc">
                         <span class="block">{{song.first}}</span>
@@ -55,9 +55,12 @@
 <script>
 import { computed } from 'vue'
 import { useSearchState } from '../useSearch'
+import { useRouter } from 'vue-router'
+import { setPlaySong } from '@/core/music/setter.js'
 export default {
-    setup (props, ctx) {
+    setup (props, { emit }) {
         const searchState = useSearchState()
+        const router = useRouter()
         // 林俊杰  林
         const filterMatchKeyword = function (str, matchStr) {
             const index = str.indexOf(matchStr)
@@ -96,9 +99,19 @@ export default {
                 songs
             }
         })
+        const handleClickSinger = singer => singer && router.push({ name: 'singer', params: { id: singer.id } })
+        const handleClickAlbum = album => album && router.push({ name: 'album', params: { id: album.id } })
+        const handleClickSong = song => song && setPlaySong(song)
+        const handleSearchKeyword = () => {
+            emit('search')
+        }
         return {
             searchState,
-            suggestList
+            suggestList,
+            handleClickSinger,
+            handleClickAlbum,
+            handleClickSong,
+            handleSearchKeyword
         }
     }
 }

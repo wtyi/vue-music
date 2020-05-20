@@ -1,14 +1,14 @@
 <template>
     <div class="singer_item" @click="handleClick">
         <div class="singer-pic">
-            <img :src="props.singer.img1v1Url" alt />
+            <img :src="singer.img1v1Url" alt />
         </div>
         <div class="singer-info">
-            <h3>{{props.singer.name}}</h3>
+            <h3>{{singer.name}}</h3>
             <div class="metadata">
                 <span>单曲:{{Math.floor(Math.random() * 200)}}</span>
-                <span>专辑:{{props.singer.albumSize}}</span>
-                <span>视频:{{props.singer.mvSize}}</span>
+                <span>专辑:{{singer.albumSize}}</span>
+                <span>视频:{{singer.mvSize}}</span>
             </div>
         </div>
     </div>
@@ -22,7 +22,6 @@ export default {
     setup (props, { emit }) {
         const handleClick = () => emit('singer', props.singer)
         return {
-            props,
             handleClick
         }
     }

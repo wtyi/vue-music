@@ -5,7 +5,7 @@
             <h3>歌单</h3>
             <span></span>
         </div>
-        <div class="album-info" v-show="playlistInfo.creator">
+        <div class="album-info" v-if="playlistInfo.creator">
             <div class="album-pic">
                 <img :src="playlistInfo.coverImgUrl" alt />
             </div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="album-data-count" v-show="playlistInfo.playCount">
+        <div class="album-data-count" v-if="playlistInfo.playCount">
             <ul>
                 <li>
                     <span class="iconfont icon-play"></span>
@@ -81,7 +81,6 @@ export default {
         const handleBack = () => router.history.go(-1)
         const handleViewSinger = id => router.push({ name: 'singer', params: { id } })
         const playlistInfo = computed(() => {
-            console.log(props)
             const {
                 playCount,
                 subscribedCount,
@@ -305,6 +304,7 @@ export default {
         p {
             line-height: rem(20);
             font-size: rem(12);
+            margin-top: 1rem;
         }
     }
 }

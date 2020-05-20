@@ -1,11 +1,11 @@
 <template>
-    <div class="song_item" v-if="props.song" @click="handleClick">
-        <div class="song-pic" v-if="props.showPic && props.song.al">
-            <img :src="props.song.al.picUrl" alt />
+    <div class="song_item" v-if="song" @click="handleClick">
+        <div class="song-pic" v-if="showPic && song.al">
+            <img :src="song.al.picUrl" alt />
         </div>
         <div class="song-info" :style="songInfoStyle">
-            <h3>{{props.song.name}}</h3>
-            <p>{{formatSinger(props.song.ar || props.song.artists)}} - {{props.song.al ? props.song.al.name : props.song.album.name}}</p>
+            <h3>{{song.name}}</h3>
+            <p>{{formatSinger(song.ar || song.artists)}} - {{song.al ? song.al.name : song.album.name}}</p>
         </div>
         <div class="play">
             <span class="iconfont icon-play"></span>
@@ -30,7 +30,6 @@ export default {
         const songInfoStyle = {}
         // props.showPic && props.song.al ? { width: '70%' } : { width: '80%' }
         return {
-            props,
             formatSinger,
             handleClick,
             songInfoStyle

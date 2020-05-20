@@ -13,7 +13,7 @@
 <script>
 import SongItem from '@/components/result/songItem'
 import { setSongList, setPlaySong } from '@/core/music/setter'
-import { computed, ref, isRef } from 'vue'
+import { computed, ref } from 'vue'
 export default {
     components: {
         SongItem

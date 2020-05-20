@@ -8,7 +8,7 @@
               <p>╮(╯_╰)╭</p>
           </div>
           <div class="modal-content">
-              <p>{{props.content}}</p>
+              <p>{{content}}</p>
           </div>
           <div class="modal-close">
               <span class="iconfont icon-close" @click="closeModal"></span>
@@ -30,7 +30,6 @@ export default {
         show: Object
     },
     setup (props) {
-        console.log(props)
         const show = ref(true)
         const hide = ref(false)
         const closeModal = function () {
@@ -44,7 +43,6 @@ export default {
         })
         return {
             imgUrl,
-            props,
             closeModal,
             show,
             hide

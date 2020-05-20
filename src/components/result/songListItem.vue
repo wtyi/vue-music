@@ -1,14 +1,14 @@
 <template>
   <div class="songlist_item" @click="handleClick">
               <div class="songlist-pic">
-            <img :src="props.playList.coverImgUrl" alt />
+            <img :src="playList.coverImgUrl" alt />
         </div>
         <div class="songList-info">
-            <h3>{{props.playList.name}}</h3>
+            <h3>{{playList.name}}</h3>
             <div class="metadata">
-                <span>{{props.playList.trackCount}}首</span>
-                <span>{{formatCount(props.playList.bookCount)}}收藏</span>
-                <span>{{formatCount(props.playList.playCount)}}播放</span>
+                <span>{{playList.trackCount}}首</span>
+                <span>{{formatCount(playList.bookCount)}}收藏</span>
+                <span>{{formatCount(playList.playCount)}}播放</span>
             </div>
         </div>
         <div class="more">

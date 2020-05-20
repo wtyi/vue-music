@@ -14,8 +14,9 @@ function hammer (app) {
                     heamertime.get('swipe').set({ direction: Hammer.DIRECTION_DOWN })
                 } else if (bingding.modifiers.left === true) {
                     heamertime.get('swipe').set({ direction: Hammer.DIRECTION_LEFT })
+                } else if (bingding.modifiers.up === true) {
+                    heamertime.get('swipe').set({ direction: Hammer.DIRECTION_UP })
                 }
-
                 heamertime.on('swipe', function (e) {
                     bingding.value && bingding.value(e)
                 })
@@ -31,6 +32,9 @@ function hammer (app) {
                     bingding.value && typeof bingding.value[2] === 'function' && bingding.value[2](e)
                 })
             }
+        },
+        unmounted (el, bingding, vnode) {
+            // remove hammer event
         }
     })
 }

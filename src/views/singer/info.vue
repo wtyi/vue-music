@@ -3,9 +3,9 @@
       <div class="left">
           <i class="iconfont icon-shandian"></i>
       </div>
-      <div class="right" v-if="props.singerInfo">
-          <h1>{{  props.singerInfo.alias && props.singerInfo.alias[0] || props.singerInfo.name}}</h1>
-          <p>{{ props.singerInfo.briefDesc}}</p>
+      <div class="right" v-if="singerInfo">
+          <h1>{{  singerInfo.alias && singerInfo.alias[0] || singerInfo.name}}</h1>
+          <p>{{ singerInfo.briefDesc}}</p>
      </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     },
     setup (props) {
         return {
-            props
+
         }
     }
 }

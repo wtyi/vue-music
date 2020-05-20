@@ -1,13 +1,13 @@
 <template>
     <div class="album_item" @click="handleClick">
         <div class="album-pic">
-            <img :src="props.album.picUrl" alt />
+            <img :src="album.picUrl" alt />
         </div>
         <div class="album-info">
-            <h3>{{props.album.name}}</h3>
+            <h3>{{album.name}}</h3>
             <div class="metadata">
-                <span>{{props.album.artist.name}}</span>
-                <span>{{formatTime(props.album.publishTime,"YYYY-MM-DD")}}</span>
+                <span>{{album.artist.name}}</span>
+                <span>{{formatTime(album.publishTime,"YYYY-MM-DD")}}</span>
             </div>
         </div>
         <div class="more">
@@ -27,7 +27,6 @@ export default {
             emit('album', props.album)
         }
         return {
-            props,
             formatTime,
             handleClick
         }

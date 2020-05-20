@@ -27,8 +27,7 @@ export default {
     setup (props) {
         return {
             formatSinger,
-            formatSongtime,
-            song: props.song
+            formatSongtime
         }
     }
 }

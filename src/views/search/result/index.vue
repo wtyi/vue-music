@@ -30,7 +30,7 @@
                 <ResultSongList />
             </div>
             <div class="loadingMore" v-show="!searchState.isLoading" v-load="loadMore">
-                <p >加载中...</p>
+                <p>加载中...</p>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@ import ResultSinger from './singer'
 import ResultSongList from './songlist'
 import { useSearchState, useSearchMethods, loadMoreResult } from '../useSearch'
 import { getSearchResultSong } from '@/request/api.js'
-import { watch, ref } from 'vue'
+import { watch } from 'vue'
 export default {
     components: {
         ResultMenu,
@@ -83,7 +83,8 @@ export default {
             }
         )
         const loadMore = () => {
-            searchState.searchResultIndex !== searchState.searchResultTypeList[0].index && loadMoreResult()
+            searchState.searchResultIndex !==
+                searchState.searchResultTypeList[0].index && loadMoreResult()
         }
         return {
             searchState,
@@ -114,12 +115,12 @@ export default {
 </style>
 
 <style lang="scss">
-    .result ul{
-        li{
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            &:last-child {
-                border: none;
-            }
+.result ul {
+    li {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        &:last-child {
+            border: none;
         }
     }
+}
 </style>

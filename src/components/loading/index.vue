@@ -1,6 +1,17 @@
 <template>
   <div class="loading" v-if="show" :class="classes">
-      <img src="@/assets/images/loadding.gif" alt="loadding">
+      <!-- <img src="@/assets/images/loadding.gif" alt="loadding"> -->
+      <div class="loading-box">
+          <span>L</span>
+        <span>o</span>
+        <span>a</span>
+        <span>d</span>
+        <span>d</span>
+        <span>i</span>
+        <span>n</span>
+        <span>g</span>
+        <span>...</span>
+      </div>
   </div>
 </template>
 
@@ -54,6 +65,18 @@ export default {
     &.hide{
         transition: all .5s;
         opacity: 0;
+    }
+}
+.loading-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    span{
+        font-size: 30px;
     }
 }
 </style>

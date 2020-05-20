@@ -9,7 +9,6 @@ import Modal from '@/components/modal/index.js'
 export const setAudio = function (audio) {
     audio && (state.audio = audio)
     state.audio.oncanplay = function () {
-        console.log(1)
         changePlayStatus(true)
     }
 }
@@ -55,6 +54,10 @@ export const changePlayStatus = function (status = null) {
  * @param {object} song 单首音乐信息
  */
 export const setPlaySong = async function (song) {
+    if (!song.id) {
+        alert('未知错误')
+        return false
+    }
     if (state.playSong && song.id === state.playSong.id) {
         changePlayStatus()
         return false
@@ -166,7 +169,7 @@ const getSongInfoById = async (id) => {
 }
 
 /**
- * 当前歌曲进度
+ * 设置当前歌曲进度
  */
 export const setSongTimeInterval = function () {
     state.timer && clearInterval(state.timer)
@@ -197,7 +200,9 @@ export const setSongTimeInterval = function () {
 export const setShowMusicModal = function (val) {
     state.showModal = !!val
 }
-
+export const setHideMusicModal = (val) => {
+    state.showModal = !!val
+}
 /**
  * 设置播放顺序 随机 or 循环
  */

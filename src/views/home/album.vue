@@ -5,7 +5,7 @@
             <ul v-hammer:swipe.down="albumMoveDown">
                 <li class="album-item" v-for="(album) in state.albums"
                     :key="album.id"
-                    :style="{backgroundImage:`url(${album.blurPicUrl})`}"
+                    :style="{backgroundImage:`url(${album.blurPicUrl}?quality=10&param=1400y800)`}"
                     :class="album.class"
                     @click="viewAlbum(album.id)"
                 >

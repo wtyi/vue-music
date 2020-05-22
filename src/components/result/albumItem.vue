@@ -1,7 +1,7 @@
 <template>
     <div class="album_item" @click="handleClick">
         <div class="album-pic">
-            <img :src="album.picUrl" alt />
+            <img :src="album.picUrl + '?param=200y200&quality=100'" alt />
         </div>
         <div class="album-info">
             <h3>{{album.name}}</h3>

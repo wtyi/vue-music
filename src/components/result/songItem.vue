@@ -1,7 +1,7 @@
 <template>
     <div class="song_item" v-if="song" @click="handleClick">
         <div class="song-pic" v-if="showPic && song.al">
-            <img :src="song.al.picUrl" alt />
+            <img :src="song.al.picUrl + '?param=200y200&quality=100'" alt />
         </div>
         <div class="song-info" :style="songInfoStyle">
             <h3>{{song.name}}</h3>

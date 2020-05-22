@@ -1,7 +1,7 @@
 <template>
     <div class="singer_item" @click="handleClick">
         <div class="singer-pic">
-            <img :src="singer.img1v1Url" alt />
+            <img :src="singer.img1v1Url + '?param=200y200&quality=100'" alt />
         </div>
         <div class="singer-info">
             <h3>{{singer.name}}</h3>

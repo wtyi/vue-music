@@ -1,7 +1,7 @@
 <template>
   <div class="songlist_item" @click="handleClick">
               <div class="songlist-pic">
-            <img :src="playList.coverImgUrl" alt />
+            <img :src="playList.coverImgUrl + '?param=200y200&quality=100'" alt />
         </div>
         <div class="songList-info">
             <h3>{{playList.name}}</h3>

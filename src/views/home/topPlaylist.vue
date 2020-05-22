@@ -8,7 +8,7 @@
       </div>
       <div class="playlist-List">
           <ul>
-              <li v-for="song in state.playlist" :key="song.id" :style="{backgroundImage:`url(${song.coverImgUrl})`}" @click="handleClickPlaylist(song)">
+              <li v-for="song in state.playlist" :key="song.id" :style="{backgroundImage:`url(${song.coverImgUrl}?quality=15)`}" @click="handleClickPlaylist(song)">
               </li>
               <span class="loadMore" v-load="loadMore">loading...</span>
           </ul>

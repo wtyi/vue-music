@@ -1,7 +1,7 @@
 <template>
     <div class="song-item">
         <div class="song-avatar">
-            <img :src="song.al.picUrl" alt />
+            <img :src="song.al.picUrl + '?param=200y200'" alt />
         </div>
         <div class="song-info">
             <div class="song-name">

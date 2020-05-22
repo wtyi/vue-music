@@ -10,7 +10,7 @@
             <li class="singer-item" v-for="singer in state.singers" :key="singer.id">
                 <div class="singer-info" @click="singSingerSong(singer)">
                     <div class="singer-avatar">
-                        <img :src="singer.picUrl" :alt="singer.name">
+                        <img :src="singer.picUrl + '?quality=100&param=150y150'" :alt="singer.name">
                     </div>
                     <div class="singer">
                         <p class="singer-name">{{singer.name}}</p>
